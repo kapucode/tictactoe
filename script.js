@@ -33,12 +33,14 @@ if (languageValue === 'en') {
   ptSelect.selected = false
   enSelect.textContent = 'English'
   ptSelect.textContent = 'Portuguese'
+  playAgainBtn.textContent = 'Play again'
   localStorage.setItem('language', 'en')
 } else {
   enSelect.selected = false
   ptSelect.selected = true
   enSelect.textContent = 'Inglês'
   ptSelect.textContent = 'Português'
+  playAgainBtn.textContent = 'Jogar de novo'
   localStorage.setItem('language', 'pt')
 }
 const isTranslated = languageSelect.value === 'en'
