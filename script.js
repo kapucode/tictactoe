@@ -4,6 +4,10 @@ const playAgainBtn = document.querySelector("#play-again")
 const announcementTitle = document.querySelector("#announcement-title")
 const announcementDiv = document.querySelector(".announcement")
 const selectModeBtn = document.querySelectorAll(".select")
+const enSelect = document.querySelector("#en")
+const ptSelect = document.querySelector("#pt")
+const languageSelect = document.querySelector("#language")
+const gameTitle = document.querySelector(".title h1")
 
 // Variáveis
 let jogadorAtual = 'x'
@@ -21,6 +25,24 @@ if (!pcLS) {
   localStorage.setItem('pc', 'true')
   pcLS = 'true'
 }
+
+// Sistema de linguagem
+let languageValue = localStorage.getItem('language') || languageSelect.value
+if (languageValue === 'en') {
+  enSelect.selected = true
+  ptSelect.selected = false
+  enSelect.textContent = 'English'
+  ptSelect.textContent = 'Portuguese'
+  localStorage.setItem('language', 'en')
+} else {
+  enSelect.selected = false
+  ptSelect.selected = true
+  enSelect.textContent = 'Inglês'
+  ptSelect.textContent = 'Português'
+  localStorage.setItem('language', 'pt')
+}
+const isTranslated = languageSelect.value === 'en'
+gameTitle.textContent = language('Jogo da Velha', 'Tic Tac Toe', isTranslated)
 
 // transforma pcLS (string) em booleano e seta pc
 pc = (pcLS === 'true')
@@ -176,22 +198,22 @@ function botPlay() {
   if (gameSituation === jogadorAtual) {
     if (pc) {
       if (gameSituation === 'o') {
-        announce(`Você perdeu!`);
+        languageAnnounce('Você perdeu!', 'You lost!')
         fadeNonWinning(jogadorAtual)
         addColor(3);
       } else {
-        announce(`Você venceu!`);
+        languageAnnounce('Você venceu!', 'You win!')
         fadeNonWinning(jogadorAtual)
         addColor(1);
       }
     } else {
-      announce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`);
+      languageAnnounce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`, `Player ${jogadorAtual.toUpperCase()} wins!`)
       fadeNonWinning(jogadorAtual)
       addColor(1);
     }
     return;
   } else if (gameSituation === 2) {
-    announce(`Empate!`);
+    languageAnnounce('Empate!', 'Draw!')
     addColor(2);
     return;
   }
@@ -319,6 +341,18 @@ function addCursor() {
   });
 }
 
+function languageAnnounce(pt, en) {
+  if (languageSelect.value === 'pt') {
+    announce(pt)
+  } else {
+    announce(en)
+  }
+}
+
+function language(pt, en, translated) {
+  return translated ? en : pt
+}
+
 // Eventos
 boxes.forEach((box) => {
   box.addEventListener("click", (e) => {
@@ -331,9 +365,9 @@ boxes.forEach((box) => {
       
       const gameSituation = checkGame(jogadorAtual)
       if (gameSituation === jogadorAtual) { // Ganhou
-        announce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`)
+        languageAnnounce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`, `Player ${jogadorAtual.toUpperCase()} wins!`)
       } else if (gameSituation === 2) { // Empate
-        announce(`Empate!`)
+        languageAnnounce('Empate!', 'Draw!')
       }
       
       alternatePlayer()
@@ -346,16 +380,16 @@ boxes.forEach((box) => {
       if (gameSituation === jogadorAtual) {if (gameSituation === jogadorAtual) {
           if (pc) {
             if (gameSituation === 'o') {
-              announce(`Você perdeu!`);
+              languageAnnounce('Você perdeu!', 'You lost!')
               fadeNonWinning(jogadorAtual)
               addColor(3);
             } else {
-              announce(`Você venceu!`);
+              languageAnnounce('Você ganhou!', 'You win!')
               fadeNonWinning(jogadorAtual)
               addColor(1);
             }
           } else {
-            announce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`);
+            languageAnnounce(`Jogador ${jogadorAtual.toUpperCase()} ganhou!`, `Player ${jogadorAtual.toUpperCase()} wins!`)
             fadeNonWinning(jogadorAtual)
             addColor(1)
           }
@@ -364,7 +398,7 @@ boxes.forEach((box) => {
         
         return;
       } else if (gameSituation === 2) {
-        announce(`Empate!`);
+        languageAnnounce('Empate!', 'Draw!')
         addColor(2)
         return;
       }
@@ -404,3 +438,19 @@ selectModeBtn.forEach((btn) => {
     localStorage.setItem('pc', String(pc))
   })
 });
+
+languageSelect.addEventListener('change', (e) => {
+  const newValue = e.target.value
+  const isTranslated = newValue === 'en'
+  gameTitle.textContent = language('Jogo da Velha', 'Tic Tac Toe', isTranslated)
+  if (isTranslated) {
+    enSelect.textContent = 'English'
+    ptSelect.textContent = 'Portuguese'
+    playAgainBtn.textContent = 'Play again'
+  } else {
+    enSelect.textContent = 'Inglês'
+    ptSelect.textContent = 'Português'
+    playAgainBtn.textContent = 'Jogar de jovo'
+  }
+  localStorage.setItem('language', newValue)
+})

@@ -9,13 +9,19 @@
   <script src="script.js" type="text/javascript" charset="utf-8" defer></script>
 </head>
 <body>
+  <section class="language-select">
+    <select name="language" id="language">
+      <option value="pt" id="pt" selected>Português</option>
+      <option value="en" id="en">Inglês</option>
+    </select>
+  </section>
   <div class="container">
     <section class="title">
       <h1>Jogo da Velha</h1>
     </section>
     <section id="select-menu">
       <button class="select" id="bot">
-        <div class="top">&#x1F916; Computador</div>
+        <div class="top">&#x1F916; Bot</div>
         <div class="bottom"></div>
       </button>
       <button class="select" id="duo">
