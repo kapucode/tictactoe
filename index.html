@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <script src="script.js" type="text/javascript" charset="utf-8" defer></script>
+</head>
+<body>
+  <div class="container">
+    <section class="title">
+      <h1>Jogo da Velha</h1>
+    </section>
+    <section id="select-menu">
+      <button class="select" id="bot">
+        <div class="top">&#x1F916; Computador</div>
+        <div class="bottom"></div>
+      </button>
+      <button class="select" id="duo">
+        <div class="top">&#x1F465; Duo</div>
+        <div class="bottom"></div>
+      </button>
+    </section>
+    <section id="game" class="game-container">
+      <div class="box" id="1"></div>
+      <div class="box" id="2"></div>
+      <div class="box" id="3"></div>
+      <div class="box" id="4"></div>
+      <div class="box" id="5"></div>
+      <div class="box" id="6"></div>
+      <div class="box" id="7"></div>
+      <div class="box" id="8"></div>
+      <div class="box" id="9"></div>
+    </section>
+    <div class="announcement hide">
+      <h2 id="announcement-title" class="title ganhou"></h2> 
+      <button id="play-again">Jogar de novo</button>
+    </div>
+  </div>
+</body>
+</html>
